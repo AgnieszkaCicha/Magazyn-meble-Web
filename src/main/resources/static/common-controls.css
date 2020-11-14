@@ -1,0 +1,20 @@
+#logo {
+    height: 300px;
+    display: block;
+    margin: 10px auto;
+}
+
+#menu a {
+    text-decoration: none;
+	font-size: 20px;
+	margin: 0 20px 0 20px;
+	padding: 0 100px 0 100px;
+	color: black;
+	border: 2px solid grey;
+    border-radius: 5px;
+    transition: color 1s;
+}
+
+#menu a:hover {
+    color: yellow;
+}
