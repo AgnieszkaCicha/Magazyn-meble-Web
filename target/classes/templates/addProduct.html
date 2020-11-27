@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Meblowisko</title>
+    <link rel="stylesheet" href="/menu.css">
+    <link rel="stylesheet" href="/common-controls.css">
+</head>
+<body>
+<div th:replace="fragments.html :: logo"></div>
+<div th:replace="fragments.html :: menu"></div>
+<form method="post" id="register-form" class="common-form">
+    <div th:if="${info != null}" th:text="${info}" id="info"></div>
+    <input type="text" placeholder="Nazwa" class="text-input" th:field="${product.name}">
+    <input type="text" placeholder="Ilość" class="text-input" th:field="${product.pieces}">
+    <input type="text" placeholder="Kod" class="text-input" th:field="${product.code}">
+    <input type="text" placeholder="Cena" class="text-input" th:field="${product.price}">
+    <select th:field="${product.category}" class="text-input">
+        <option value="FURNITURE">Meble</option>
+        <option value="AGD">AGD</option>
+    </select>
+    <input type="submit" value="Dodaj" class="form-submit">
+</form>
+</body>
+</html>
