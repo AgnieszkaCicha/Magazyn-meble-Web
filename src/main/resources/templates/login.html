@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Meblowisko</title>
+    <link rel="stylesheet" href="/common-controls.css">
+    <script src="loginValidator.js"></script>
+</head>
+<body>
+<div th:replace="fragments.html :: logo"></div>
+<form name="loginForm" id="login-form" class="common-form" method="post" onsubmit="return validate()">
+    <div th:if="${info != null}" th:text="${info}" id="info"></div>
+    <input type="text" placeholder="login" class="text-input" th:field="*{userModel.login}" name="login">
+    <input type="password" placeholder="password" class="text-input" th:field="*{userModel.pass}" name="pass">
+    <input type="submit" value="Zaloguj" class="form-submit">
+    <a href="/register" id="register-link">Zarejestruj</a>
+</form>
+</body>
+</html>

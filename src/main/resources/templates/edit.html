@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Meblowikso</title>
+    <link rel="stylesheet" href="/edit.css">
+    <link rel="stylesheet" href="/common-controls.css">
+    <script src="editProfileValidator.js"></script>
+</head>
+<body>
+<div th:replace="fragments.html :: logo"></div>
+<div th:replace="fragments.html :: menu"></div>
+<form id="edit-data-form" method="post" action="/changeData" name="dataForm" onsubmit="return validateData()">
+    <input type="text" placeholder="Imie" class="text-input" th:field="*{user.name}" name="name">
+    <input type="text" placeholder="Nazwisko" class="text-input" th:field="*{user.surname}" name="surname">
+    <input type="submit" value="OK" class="form-submit">
+</form>
+<form id="change-pass-form" class="common-form" method="post" action="/changePass" name="passForm" onsubmit="return validatePass()">
+    <div th:if="${info != null}" th:text="${info}" id="info"></div>
+    <input type="password" placeholder="hasło" class="text-input" th:field="*{passModel.pass}" id="currentPass">
+    <input type="password" placeholder="nowe hasło" class="text-input" th:field="*{passModel.newPass}" id="newPass">
+    <input type="password" placeholder="powtórz nowe hasło" class="text-input" th:field="*{passModel.repeatedNewPass}" id="newPass2">
+    <input type="submit" value="OK" class="form-submit">
+</form>
+</body>
+</html>

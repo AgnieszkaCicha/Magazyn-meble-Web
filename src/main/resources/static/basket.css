@@ -1,0 +1,23 @@
+#basket-content {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 523px;
+  max-width: 1270px;
+  margin: 50px auto;
+  padding: 0 15px;
+}
+
+#basket-content tr:nth-child(even){background-color: #f2f2f2;}
+
+#basket-content th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+#basket-content th, #basket-content td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
