@@ -10,6 +10,7 @@ import pl.agnieszkacicha.magazyn.database.IUserRepository;
 import pl.agnieszkacicha.magazyn.model.User;
 import pl.agnieszkacicha.magazyn.model.view.ChangePassData;
 import pl.agnieszkacicha.magazyn.model.view.UserRegistrationData;
+import pl.agnieszkacicha.magazyn.services.IUserService;
 import pl.agnieszkacicha.magazyn.session.SessionObject;
 
 import javax.annotation.Resource;
@@ -24,6 +25,9 @@ public class UserController {
 
     @Resource
     SessionObject sessionObject;
+
+    @Autowired
+    IUserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginForm(Model model) {
@@ -44,7 +48,7 @@ public class UserController {
             return "redirect:/login";
         }
 
-        this.sessionObject.setUser(this.userRepository.authenticate(user));
+        this.sessionObject.setUser(this.userService.authenticate(user));
 
         if(this.sessionObject.getUser() != null) {
             return "redirect:/main";
@@ -80,17 +84,16 @@ public class UserController {
         Matcher surnameMatcher = regexPattern.matcher(user.getSurname());
 
         if(!nameMatcher.matches() || !surnameMatcher.matches()) {
+            this.sessionObject.setInfo("Nieprawidłowe dane !!");
             return "redirect:/edit";
         }
 
-        user.setLogin(this.sessionObject.getUser().getLogin());
-        User updatedUser = this.userRepository.updateUserData(user);
-        this.sessionObject.setUser(updatedUser);
+        this.userService.updateUserData(user);
         return "redirect:/edit";
     }
 
     @RequestMapping(value = "/changePass", method = RequestMethod.POST)
-    public String changePass(@ModelAttribute ChangePassData changePassData, Model model) {
+    public String changePass(@ModelAttribute ChangePassData changePassData) {
 
         Pattern regexPattern = Pattern.compile(".{3}.*");
         Matcher currentPassMatcher = regexPattern.matcher(changePassData.getPass());
@@ -101,20 +104,17 @@ public class UserController {
             return "redirect:/edit";
         }
 
-        User user = new User();
-        user.setPass(changePassData.getPass());
-        user.setLogin(this.sessionObject.getUser().getLogin());
-
-        User authenticatedUser = this.userRepository.authenticate(user);
-
-        if(authenticatedUser == null || !currentPassMatcher.matches() || !newPassMatcher.matches()) {
+        if(!currentPassMatcher.matches() || !newPassMatcher.matches()) {
             this.sessionObject.setInfo("Nieprawidłowe hasło !!");
             return "redirect:/edit";
         }
 
-        user.setPass(changePassData.getNewPass());
-        User updatedUser = this.userRepository.updateUserPass(user);
-        this.sessionObject.setUser(updatedUser);
+        User result = this.userService.updateUserPass(changePassData);
+        if(result != null) {
+            this.sessionObject.setUser(result);
+        } else {
+            this.sessionObject.setInfo("Zmiana hasła nieudana !!");
+        }
 
         return "redirect:/edit";
     }
@@ -133,20 +133,13 @@ public class UserController {
             return "redirect:/register";
         }
 
-        boolean checkResult = this.userRepository.checkIfLoginExist(userRegistrationData.getLogin());
+        boolean checkResult = this.userService.registerUser(userRegistrationData);
 
-        if(checkResult) {
+        if(!checkResult) {
             this.sessionObject.setInfo("Login zajęty !!");
+
             return "redirect:/register";
         }
-
-        User user = new User(userRegistrationData.getName(),
-                userRegistrationData.getSurname(),
-                userRegistrationData.getLogin(),
-                userRegistrationData.getPass(),
-                User.Role.USER);
-
-        this.userRepository.addUser(user);
 
         this.sessionObject.setInfo("Rejestracja udana !!");
         return "redirect:/login";

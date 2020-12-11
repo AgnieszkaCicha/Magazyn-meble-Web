@@ -8,6 +8,5 @@ public interface IUserRepository {
     User updateUserPass(User user);
     boolean checkIfLoginExist(String login);
     void addUser(User user);
-
 }
 

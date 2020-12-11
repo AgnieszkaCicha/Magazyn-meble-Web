@@ -5,9 +5,9 @@ import java.util.List;
 public interface IProductRepository {
 
     List<Product> getAllProducts();
-    List<Product> getFurniture();
-    List<Product> getAGD();
+    List<Product> getProductByCategory(Product.Category category);
     Product getProductByCode(String filter);
     void addProduct(Product product);
+    void updateProduct (Product product);
 
 }

@@ -28,9 +28,9 @@
                 <span th:text="'Ilość: ' + ${product.pieces}"></span>
                 <span th:text="'Kod: ' + ${product.code}"></span>
                 <span th:text="'Cena: ' + ${product.price}"></span>
-                <a th:href="@{/addToBasket/{code}(code=${product.code})}" class="buy"></a>
+                <a th:href="@{/addToBasket/{id}(id=${product.id})}" class="buy"></a>
                 <a th:if="${user.role.name() == 'ADMIN'}"
-                   th:href="@{/editProduct/{code}(code=${product.code})}" class="edit"></a>
+                   th:href="@{/editProduct/{id}(id=${product.id})}" class="edit"></a>
             </div>
         </div>
     </th:block>

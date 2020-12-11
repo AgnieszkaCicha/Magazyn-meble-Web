@@ -7,14 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Component
 public class ListUserRepositoryImpl implements IUserRepository {
 
     private final List<User> userList = new ArrayList<>();
 
     public ListUserRepositoryImpl() {
-        this.userList.add(new User("Agnieszka", "Cicha", "admin", "admin", User.Role.ADMIN));
-        this.userList.add(new User("Jan", "Kowalski", "jan", "jan", User.Role.USER));
+/*        this.userList.add(new User("Agnieszka", "Cicha", "admin", "admin", User.Role.ADMIN));
+        this.userList.add(new User("Jan", "Kowalski", "jan", "jan", User.Role.USER));*/
     }
 
     @Override

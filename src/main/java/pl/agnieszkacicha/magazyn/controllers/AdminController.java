@@ -7,9 +7,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import pl.agnieszkacicha.magazyn.database.IProductRepository;
 import pl.agnieszkacicha.magazyn.model.Product;
-import pl.agnieszkacicha.magazyn.model.User;
+import pl.agnieszkacicha.magazyn.services.IProductService;
 import pl.agnieszkacicha.magazyn.session.SessionObject;
 
 import javax.annotation.Resource;
@@ -17,11 +16,11 @@ import javax.annotation.Resource;
 @Controller
 public class AdminController {
 
-    @Autowired
-    IProductRepository productRepository;
-
     @Resource
     SessionObject sessionObject;
+
+    @Autowired
+    IProductService productService;
 
     @RequestMapping(value = "/addProduct", method = RequestMethod.GET)
     public String addProductForm(Model model) {
@@ -39,38 +38,27 @@ public class AdminController {
         if(!this.sessionObject.isLogged()) {
             return "redirect:/login";
         }
-        Product productFromDB = this.productRepository.getProductByCode(product.getCode());
-
-        if(productFromDB != null) {
-            productFromDB.setPieces(productFromDB.getPieces() + product.getPieces());
+        IProductService.AddProductResult result = this.productService.addProduct(product);
+        if(result == IProductService.AddProductResult.PIECES_ADDED) {
             this.sessionObject.setInfo("Zwiększono ilość sztuk !!");
-        } else {
-            if(product.getName().equals("") ||
-                    product.getCode().equals("") ||
-                    product.getPrice() == 0.0) {
-                this.sessionObject.setInfo("Uzupełnij formularz !!");
-            } else {
-                this.productRepository.addProduct(product);
-                this.sessionObject.setInfo("Dodano nowy produkt !!");
-            }
+        } else if(result == IProductService.AddProductResult.PRODUCT_ADDED) {
+            this.sessionObject.setInfo("Dodano nowy produkt !!");
         }
         return "redirect:/addProduct";
     }
 
-    @RequestMapping(value = "/editProduct/{code}", method = RequestMethod.GET)
-    public String editProductPage(@PathVariable String code, Model model) {
-        Product product = this.productRepository.getProductByCode(code);
+    @RequestMapping(value = "/editProduct/{id}", method = RequestMethod.GET)
+    public String editProductPage(@PathVariable int id, Model model) {
+        Product product = this.productService.getProductById(id);
         model.addAttribute("product", product);
         model.addAttribute("user", this.sessionObject.getUser());
         return "editProduct";
     }
 
-    @RequestMapping(value = "/editProduct/{code}", method = RequestMethod.POST)
-    public String editProduct(@ModelAttribute Product product, @PathVariable String code) {
-        Product productFromDataBase = this.productRepository.getProductByCode(code);
-        productFromDataBase.setPieces(product.getPieces());
-        productFromDataBase.setCategory(product.getCategory());
-        productFromDataBase.setPrice(product.getPrice());
+    @RequestMapping(value = "/editProduct/{id}", method = RequestMethod.POST)
+    public String editProduct(@ModelAttribute Product product, @PathVariable int id) {
+        product.setId(id);
+        this.productService.updateProduct(product);
 
         return "redirect:/main";
     }

@@ -1,14 +1,15 @@
 package pl.agnieszkacicha.magazyn.model;
 
 public class Product {
-
+    private int id;
     private String code;
     private String name;
     private int pieces;
     private double price;
     private Category category;
 
-    public Product(String code, String name, int pieces, double price, Category category) {
+    public Product(int id, String code, String name, int pieces, double price, Category category) {
+        this.id = id;
         this.code = code;
         this.name = name;
         this.pieces = pieces;
@@ -17,6 +18,14 @@ public class Product {
     }
 
     public Product() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getCode() { return code; }
@@ -64,7 +73,26 @@ public class Product {
 
     @Override
     public Object clone() {
-        return new Product (this.code, this.name, this.pieces, this.price, this.category);
+
+        return new Product (this.id,this.code, this.name, this.pieces, this.price, this.category);
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder().append("Product{")
+                .append("id=")
+                .append(id)
+                .append(", code='")
+                .append(code)
+                .append(", name='")
+                .append(name)
+                .append(", pieces=")
+                .append(pieces)
+                .append(", price=")
+                .append(price)
+                .append(", category=")
+                .append(category)
+                .append('}').toString();
     }
 
 }

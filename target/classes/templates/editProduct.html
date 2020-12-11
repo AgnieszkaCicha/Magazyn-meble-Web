@@ -14,7 +14,7 @@
     <div th:if="${info != null}" th:text="${info}" id="info"></div>
     <input type="text" placeholder="Nazwa" class="text-input" th:field="${product.name}">
     <input type="text" placeholder="Ilość" class="text-input" th:field="${product.pieces}">
-    <input type="text" placeholder="Kod" class="text-input" th:field="${product.code}" disabled>
+    <input type="text" placeholder="Kod" class="text-input" th:field="${product.code}">
     <input type="text" placeholder="Cena" class="text-input" th:field="${product.price}">
     <select th:field="${product.category}" class="text-input">
         <option value="FURNITURE">Meble</option>

@@ -47,6 +47,13 @@
     display: block;
 }
 
+.common-form a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: green;
+}
+
 .common-form select {
     display: block;
 }
@@ -57,6 +64,7 @@
     border-radius: 10px;
     font-size: 26px;
     text-align: center;
+
 }
 
 .form-submit {
@@ -76,3 +84,7 @@
     border: 2px solid black;
 }
 
+#info {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}

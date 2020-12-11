@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.agnieszkacicha.magazyn.database.IProductRepository;
+import pl.agnieszkacicha.magazyn.model.Product;
+import pl.agnieszkacicha.magazyn.services.IProductService;
 import pl.agnieszkacicha.magazyn.session.SessionObject;
 import pl.agnieszkacicha.magazyn.utils.FilterUtils;
 
@@ -16,7 +18,7 @@ import javax.annotation.Resource;
 public class CommonController {
 
     @Autowired
-    IProductRepository productRepository;
+    IProductService productService;
 
     @Resource
     SessionObject sessionObject;
@@ -29,24 +31,7 @@ public class CommonController {
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public String main(Model model, @RequestParam(defaultValue = "none") String category) {
         if(sessionObject.isLogged()) {
-            switch (category) {
-                case "FURNITURE":
-                    model.addAttribute("products",
-                            FilterUtils.filterProducts(this.productRepository.getFurniture(),
-                                    this.sessionObject.getFilter()));
-                    break;
-                case "AGD":
-                    model.addAttribute("products",
-                            FilterUtils.filterProducts(this.productRepository.getAGD(),
-                                    this.sessionObject.getFilter()));
-                    break;
-
-                default:
-                    model.addAttribute("products",
-                            FilterUtils.filterProducts(this.productRepository.getAllProducts(),
-                                    this.sessionObject.getFilter()));
-                    break;
-            }
+            model.addAttribute("products", this.productService.getProductsByCategoryWithFilter(category));
             model.addAttribute("user", this.sessionObject.getUser());
             model.addAttribute("filter", this.sessionObject.getFilter());
             return "main";
