@@ -1,4 +1,5 @@
 package pl.agnieszkacicha.magazyn.configuration;
+import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 @ComponentScan("pl.agnieszkacicha.magazyn")
 public class AppConfiguration {
 
-    @Bean
+/*    @Bean
     public Connection connection() throws ClassNotFoundException {
 
         try {
@@ -24,6 +25,12 @@ public class AppConfiguration {
             e.printStackTrace();
         }
     return null;
+    }*/
+
+    @Bean
+    public SessionFactory sessionFactory() {
+        return new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
+
     }
 }
 

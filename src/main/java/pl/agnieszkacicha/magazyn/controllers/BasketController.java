@@ -39,5 +39,12 @@ public class BasketController {
         model.addAttribute("bill", basketService.calculateBill());
         return "basket";
     }
+
+    @RequestMapping(value = "/remove-product-from-basket/{id}", method = RequestMethod.GET)
+    public String removeFromBasket(@PathVariable int id) {
+        this.basketService.removeFromBasket(id);
+        return "redirect:/basket";
+    }
+
 }
 

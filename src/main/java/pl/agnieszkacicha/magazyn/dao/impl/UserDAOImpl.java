@@ -1,8 +1,6 @@
 package pl.agnieszkacicha.magazyn.dao.impl;
 
-import com.sun.corba.se.spi.orb.ORBVersion;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import pl.agnieszkacicha.magazyn.dao.IUserDAO;
 import pl.agnieszkacicha.magazyn.model.User;
 
@@ -11,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Repository
+
 public class UserDAOImpl implements IUserDAO {
 
     @Autowired
@@ -83,4 +81,6 @@ public class UserDAOImpl implements IUserDAO {
 
         return user;
     }
+
+
 }

@@ -21,16 +21,19 @@
     <th:block th:each="product : ${products}">
         <div class="product">
             <div id="product-row">
-                <img th:src="'/' + ${product.name} + '.jpg'" th:alt=${product.name} id="product-foto">
+                <img th:src="'/' + ${product.code} + '.png'" th:alt=${product.name} id="product-foto">
                 <p th:text="${product.name}" class="product-name"></p>
             </div>
             <div class="product-info">
                 <span th:text="'Ilość: ' + ${product.pieces}"></span>
                 <span th:text="'Kod: ' + ${product.code}"></span>
                 <span th:text="'Cena: ' + ${product.price}"></span>
-                <a th:href="@{/addToBasket/{id}(id=${product.id})}" class="buy"></a>
+                <a th:if="${product.pieces > 0}" th:href="@{/addToBasket/{id}(id=${product.id})}" class="buy"></a>
+                <a th:if="${product.pieces <= 0}" th:href="@{/addToBasket/{id}(id=${product.id})}" class="buy-blocked"></a>
                 <a th:if="${user.role.name() == 'ADMIN'}"
                    th:href="@{/editProduct/{id}(id=${product.id})}" class="edit"></a>
+                <a th:if="${user.role.name() == 'ADMIN'}"
+                   th:href="@{/deleteProduct/{id}(id=${product.id})}" class="delete"></a>
             </div>
         </div>
     </th:block>

@@ -1,11 +1,16 @@
 package pl.agnieszkacicha.magazyn.model;
 
+import javax.persistence.*;
+
+@Entity(name = "tproduct")
 public class Product {
+    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String code;
     private String name;
     private int pieces;
     private double price;
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     public Product(int id, String code, String name, int pieces, double price, Category category) {

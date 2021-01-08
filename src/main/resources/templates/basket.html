@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/basket.css">
     <link rel="stylesheet" href="/common-controls.css">
 </head>
-<body>
+
 <div th:replace="fragments.html :: logo"></div>
 <div th:replace="fragments.html :: menu"></div>
 
@@ -16,6 +16,7 @@
         <th class="pieces">Ilość</th>
         <th class="price1">Cena za sztukę</th>
         <th class="price2">Cena</th>
+        <th class="remove-button"></th>
     </tr>
 
     <th:block th:each="product : ${products}">
@@ -24,6 +25,7 @@
             <td th:text="${product.pieces}"></td>
             <td th:text="${product.price}"></td>
             <td th:text="${product.price * product.pieces}"></td>
+            <td> <a th:href="@{/remove-product-from-basket/{id}(id=${product.id})}" id="removeFromBasket"></a> </td>
         </tr>
     </th:block>
 
@@ -32,7 +34,11 @@
         <th class="pieces"></th>
         <th class="price1">Suma</th>
         <th class="price2" th:text="${bill}"></th>
+        <th class="remove-button"></th>
     </tr>
 </table>
+
+<a href="/confirm-order" id=order-confirmation-button>Zamów</a>
+
 </body>
 </html>

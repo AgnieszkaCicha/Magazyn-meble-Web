@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Component
+
 public class JDBCUserRepositoryImpl implements IUserRepository {
 
     @Autowired
@@ -75,7 +75,7 @@ public class JDBCUserRepositoryImpl implements IUserRepository {
                 e.printStackTrace();
             }
 
-            /*na wszelki wypadek zwracamu ze taki login juz jest zeby nie zarejestrował 2 raz tego loginu jak sie cos wywali*/
+            /*na wszelki wypadek zwracamy ze taki login juz jest zeby nie zarejestrował 2 raz tego loginu jak sie cos wywali*/
             return true;
         }
 

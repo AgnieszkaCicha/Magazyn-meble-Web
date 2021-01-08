@@ -6,13 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.agnieszkacicha.magazyn.database.IProductRepository;
 import pl.agnieszkacicha.magazyn.model.Product;
 import pl.agnieszkacicha.magazyn.services.IProductService;
 import pl.agnieszkacicha.magazyn.session.SessionObject;
-import pl.agnieszkacicha.magazyn.utils.FilterUtils;
+
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Controller
 public class CommonController {
@@ -31,7 +31,16 @@ public class CommonController {
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public String main(Model model, @RequestParam(defaultValue = "none") String category) {
         if(sessionObject.isLogged()) {
-            model.addAttribute("products", this.productService.getProductsByCategoryWithFilter(category));
+            List<Product> mainStoreProducts = this.productService.getProductsByCategoryWithFilter(category);
+            for(Product productFromMainStore : mainStoreProducts) {
+                for(Product productFromBasket : this.sessionObject.getBasket()) {
+                    if(productFromMainStore.getId() == productFromBasket.getId()) {
+                        productFromMainStore.setPieces(productFromMainStore.getPieces()
+                                - productFromBasket.getPieces());
+                    }
+                }
+            }
+            model.addAttribute("products", mainStoreProducts);
             model.addAttribute("user", this.sessionObject.getUser());
             model.addAttribute("filter", this.sessionObject.getFilter());
             return "main";

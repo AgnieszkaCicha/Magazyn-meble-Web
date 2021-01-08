@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import pl.agnieszkacicha.magazyn.database.IUserRepository;
 import pl.agnieszkacicha.magazyn.model.User;
 import pl.agnieszkacicha.magazyn.model.view.ChangePassData;
 import pl.agnieszkacicha.magazyn.model.view.UserRegistrationData;
@@ -19,9 +18,6 @@ import java.util.regex.Pattern;
 
 @Controller
 public class UserController {
-
-    @Autowired
-    IUserRepository userRepository;
 
     @Resource
     SessionObject sessionObject;

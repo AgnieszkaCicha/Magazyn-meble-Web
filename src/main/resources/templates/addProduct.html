@@ -9,12 +9,13 @@
 <body>
 <div th:replace="fragments.html :: logo"></div>
 <div th:replace="fragments.html :: menu"></div>
-<form method="post" id="register-form" class="common-form">
+<form method="post" id="register-form" class="common-form" enctype="multipart/form-data">
     <div th:if="${info != null}" th:text="${info}" id="info"></div>
     <input type="text" placeholder="Nazwa" class="text-input" th:field="${product.name}">
     <input type="text" placeholder="Ilość" class="text-input" th:field="${product.pieces}">
     <input type="text" placeholder="Kod" class="text-input" th:field="${product.code}">
     <input type="text" placeholder="Cena" class="text-input" th:field="${product.price}">
+    <input type="file" name="obrazek">
     <select th:field="${product.category}" class="text-input">
         <option value="FURNITURE">Meble</option>
         <option value="AGD">AGD</option>

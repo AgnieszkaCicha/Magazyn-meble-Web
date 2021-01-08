@@ -3,15 +3,15 @@ package pl.agnieszkacicha.magazyn.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.agnieszkacicha.magazyn.model.Product;
 import pl.agnieszkacicha.magazyn.services.IProductService;
 import pl.agnieszkacicha.magazyn.session.SessionObject;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.IOException;
 
 @Controller
 public class AdminController {
@@ -34,7 +34,17 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/addProduct", method = RequestMethod.POST)
-    public String addProduct(@ModelAttribute Product product) {
+    public String addProduct(@ModelAttribute Product product, @RequestParam MultipartFile obrazek) {
+
+        try {
+            String filePath =
+                    "C:\\ITCamp\\magazynAppWeb\\src\\main\\resources\\static\\" +
+                            product.getCode() + ".png";
+            obrazek.transferTo(new File(filePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         if(!this.sessionObject.isLogged()) {
             return "redirect:/login";
         }
@@ -42,6 +52,7 @@ public class AdminController {
         if(result == IProductService.AddProductResult.PIECES_ADDED) {
             this.sessionObject.setInfo("Zwiększono ilość sztuk !!");
         } else if(result == IProductService.AddProductResult.PRODUCT_ADDED) {
+
             this.sessionObject.setInfo("Dodano nowy produkt !!");
         }
         return "redirect:/addProduct";

@@ -1,11 +1,10 @@
 package pl.agnieszkacicha.magazyn.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import pl.agnieszkacicha.magazyn.dao.IProductDAO;
 import pl.agnieszkacicha.magazyn.model.Product;
 
-import java.net.ConnectException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
+
 public class ProductDAOImpl implements IProductDAO {
 
     @Autowired

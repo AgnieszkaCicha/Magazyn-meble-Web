@@ -1,8 +1,6 @@
 package pl.agnieszkacicha.magazyn.database.impl;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import pl.agnieszkacicha.magazyn.database.IProductRepository;
 import pl.agnieszkacicha.magazyn.model.Product;
 
@@ -14,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Component
 public class JDBCProductRepositoryImpl implements IProductRepository {
 
     @Autowired
